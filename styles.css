@@ -47,7 +47,7 @@ input[type="text"] {
     box-sizing: border-box; 
 }
 
-.guess-box {
+.guess-boxes-container {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -76,4 +76,13 @@ input[type="text"] {
 #congrats {
     color: green;
     margin-top: 20px;
+}
+
+/* Positioning for correct and incorrect guess boxes */
+.correct-guesses-box {
+    order: -1; /* Display correct guesses box second */
+}
+
+.incorrect-guesses-box {
+    order: 1; /* Display incorrect guesses box first */
 }
