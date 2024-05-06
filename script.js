@@ -8,6 +8,7 @@ const countriesAndCapitals = {
 let currentLetter;
 let correctCountries;
 let incorrectCountries;
+let guessCount;
 
 // Function to start the game
 function startGame() {
@@ -15,6 +16,7 @@ function startGame() {
     document.getElementById("gameArea").style.display = "block";
     correctCountries = [];
     incorrectCountries = [];
+    guessCount = 0;
     const letters = Object.keys(countriesAndCapitals);
     currentLetter = letters[Math.floor(Math.random() * letters.length)];
     document.getElementById("letter").innerText = "Letter: " + currentLetter;
@@ -24,10 +26,13 @@ function startGame() {
 function checkGuess() {
     const guess = document.getElementById("guessInput").value.trim();
     if (guess === "") return;
-    if (countriesAndCapitals[currentLetter].includes(guess)) {
-        if (!correctCountries.includes(guess)) {
-            correctCountries.push(guess);
-            document.getElementById("correctGuesses").innerHTML += "<li>" + guess + "</li>";
+    guessCount++;
+    document.getElementById("guessCount").innerText = guessCount;
+    const capitalizedGuess = guess.charAt(0).toUpperCase() + guess.slice(1).toLowerCase();
+    if (countriesAndCapitals[currentLetter].includes(capitalizedGuess)) {
+        if (!correctCountries.includes(capitalizedGuess)) {
+            correctCountries.push(capitalizedGuess);
+            document.getElementById("correctGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
             if (correctCountries.length === countriesAndCapitals[currentLetter].length) {
                 document.getElementById("congrats").style.display = "block";
             }
