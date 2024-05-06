@@ -48,26 +48,39 @@ function startGame() {
 function checkGuess() {
     const guess = document.getElementById("guessInput").value.trim();
     if (guess === "") return;
+
+    // Capitalize the first letter of the guess
+    const capitalizedGuess = guess.charAt(0).toUpperCase() + guess.slice(1);
+
+    // Check if the guess has already been made
+    if (correctCountries.includes(capitalizedGuess) || incorrectCountries.includes(capitalizedGuess)) {
+        alert("Guess already made!");
+        document.getElementById("guessInput").value = "";
+        return;
+    }
+
     guessCount++;
     document.getElementById("guessCount").innerText = guessCount;
-    const lowercaseGuess = guess.toLowerCase();
+    
     const lowercaseCountries = countriesAndCapitals[currentLetter].map(country => country.toLowerCase());
+    const lowercaseGuess = capitalizedGuess.toLowerCase();
     if (lowercaseCountries.includes(lowercaseGuess)) {
-        if (!correctCountries.includes(guess)) {
-            correctCountries.push(guess);
-            document.getElementById("correctGuesses").innerHTML += "<li>" + guess + "</li>";
+        if (!correctCountries.includes(capitalizedGuess)) {
+            correctCountries.push(capitalizedGuess);
+            document.getElementById("correctGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
             if (correctCountries.length === countriesAndCapitals[currentLetter].length) {
                 document.getElementById("congrats").style.display = "block";
             }
         }
     } else {
-        if (!incorrectCountries.includes(guess)) {
-            incorrectCountries.push(guess);
-            document.getElementById("incorrectGuesses").innerHTML += "<li>" + guess + "</li>";
+        if (!incorrectCountries.includes(capitalizedGuess)) {
+            incorrectCountries.push(capitalizedGuess);
+            document.getElementById("incorrectGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
         }
     }
     document.getElementById("guessInput").value = "";
 }
+
 
 // Event listeners
 document.getElementById("startButton").addEventListener("click", startGame);
