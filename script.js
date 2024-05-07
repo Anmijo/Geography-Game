@@ -36,6 +36,7 @@ let guessCount;
 function startGame() {
     document.getElementById("startButton").style.display = "none";
     document.getElementById("gameArea").style.display = "block";
+    document.querySelector("h1").style.display = "none"; 
     correctCountries = [];
     incorrectCountries = [];
     guessCount = 0;
