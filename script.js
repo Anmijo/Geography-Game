@@ -1,5 +1,5 @@
 // List of countries and capitals
-const countriesAndCapitals = {
+const countriesList = {
     A: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan"],
     B: ["Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi"],
     C: ["Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic"],
@@ -27,21 +27,59 @@ const countriesAndCapitals = {
     Z: ["Zambia", "Zimbabwe"],
 };
 
+const capitalsList = {
+    A: ["Algiers", "Andorra la Vella", "Addis Ababa", "Abu Dhabi"],
+    B: ["Berlin", "Buenos Aires", "Brasília", "Bandar Seri Begawan", "Belmopan", "Bridgetown", "Budapest", "Bucharest"],
+    C: ["Cairo", "Canberra", "Caracas", "Castries", "Copenhagen"],
+    D: ["Dakar", "Dili", "Dodoma", "Doha", "Dublin", "Dushanbe"],
+    E: ["El Aaiún"],
+    F: ["Funafuti"],
+    G: ["Georgetown"],
+    H: ["Harare", "Hanoi"],
+    I: ["Islamabad"],
+    J: ["Jakarta"],
+    K: ["Kabul", "Kathmandu", "Kigali", "Kingston", "Kyiv"],
+    L: ["Lima", "Lisbon", "London", "Lomé", "Luanda"],
+    M: ["Majuro", "Managua", "Manama", "Maseru", "Mata-Utu", "Mexico City", "Mogadishu", "Moscow", "Muscat"],
+    N: ["Nairobi", "Naypyidaw", "N'Djamena", "New Delhi", "Niamey", "Nouakchott", "Nuku'alofa"],
+    O: ["Ottawa", "Oslo"],
+    P: ["Palikir", "Panama City", "Paris", "Phnom Penh", "Podgorica", "Port Moresby", "Port of Spain", "Port Vila", "Porto-Novo", "Praia", "Pyongyang"],
+    Q: ["Quito"],
+    R: ["Rabat", "Ramallah"],
+    S: ["San Marino", "Sana'a", "Santo Domingo", "São Tomé", "Seoul", "Skopje", "Stockholm", "Suva"],
+    T: ["Tallinn", "Tashkent", "Tarawa", "Tbilisi", "Tegucigalpa", "Tehran", "Tokyo", "Tripoli", "Tunis"],
+    U: ["Ulaanbaatar"],
+    V: ["Vaduz", "Vatican City", "Victoria", "Vienna"],
+    W: ["Warsaw", "Washington, D.C.", "Wellington"],
+    Y: ["Yaoundé"],
+    Z: ["Zagreb"],  
+};
+
 let currentLetter;
-let correctCountries;
-let incorrectCountries;
+let correctCriteria;
+let incorrectCriteria;
 let guessCount;
+let usedList;
 
 // Function to start the game
 function startGame() {
+    //check if criterias are selected
+    usedList = mergeObjects(countriesTemp, capitalsTemp);
+
+    if (usedList == "") {
+        alert("Atleast one criteria must be selected!");
+        return;
+    }
+
     document.getElementById("gameArea").style.display = "block";
     document.querySelector("h1").style.display = "none"; 
     document.querySelector(".game-description").style.display = "none";
+    document.querySelector(".toggle-container").style.display = "none";
     document.getElementById("startButton").style.display = "none";
-    correctCountries = [];
-    incorrectCountries = [];
+    correctCriteria = [];
+    incorrectCriteria = [];
     guessCount = 0;
-    const letters = Object.keys(countriesAndCapitals);
+    const letters = Object.keys(usedList);
     currentLetter = letters[Math.floor(Math.random() * letters.length)];
     document.getElementById("letter").innerText = "Letter: " + currentLetter;
 }
@@ -55,7 +93,7 @@ function checkGuess() {
     const capitalizedGuess = guess.charAt(0).toUpperCase() + guess.slice(1);
 
     // Check if the guess has already been made
-    if (correctCountries.includes(capitalizedGuess) || incorrectCountries.includes(capitalizedGuess)) {
+    if (correctCriteria.includes(capitalizedGuess) || incorrectCriteria.includes(capitalizedGuess)) {
         alert("Guess already made!");
         document.getElementById("guessInput").value = "";
         return;
@@ -64,66 +102,92 @@ function checkGuess() {
     guessCount++;
     document.getElementById("guessCount").innerText = guessCount;
     
-    const lowercaseCountries = countriesAndCapitals[currentLetter].map(country => country.toLowerCase());
+    const lowercaseCriteria = usedList[currentLetter].map(criteria => criteria.toLowerCase());
     const lowercaseGuess = capitalizedGuess.toLowerCase();
-    if (lowercaseCountries.includes(lowercaseGuess)) {
-        if (!correctCountries.includes(capitalizedGuess)) {
-            correctCountries.push(capitalizedGuess);
+    if (lowercaseCriteria.includes(lowercaseGuess)) {
+        if (!correctCriteria.includes(capitalizedGuess)) {
+            correctCriteria.push(capitalizedGuess);
             document.getElementById("correctGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
-            if (correctCountries.length === countriesAndCapitals[currentLetter].length) {
+            if (correctCriteria.length === usedList[currentLetter].length) {
                 document.getElementById("congrats").style.display = "block";
                 document.getElementById("submitGuess").style.display = "none";
                 document.getElementById("guessInput").style.display = "none";
             }
         }
     } else {
-        if (!incorrectCountries.includes(capitalizedGuess)) {
-            incorrectCountries.push(capitalizedGuess);
+        if (!incorrectCriteria.includes(capitalizedGuess)) {
+            incorrectCriteria.push(capitalizedGuess);
             document.getElementById("incorrectGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
         }
     }
     document.getElementById("guessInput").value = "";
 }
 
+// merge objects
+function mergeObjects(obj1, obj2) {
+    const result = {};
 
-// function checkGuess() {
-//     const guess = document.getElementById("guessInput").value.trim();
-//     if (guess === "") return;
+    if(obj2 == ""){
+        return obj1;
+    }
 
-//     // Capitalize the first letter of the guess
-//     const capitalizedGuess = guess.charAt(0).toUpperCase() + guess.slice(1);
-
-//     // Check if the guess has already been made
-//     if (correctCountries.includes(capitalizedGuess) || incorrectCountries.includes(capitalizedGuess)) {
-//         alert("Guess already made!");
-//         document.getElementById("guessInput").value = "";
-//         return;
-//     }
-
-//     guessCount++;
-//     document.getElementById("guessCount").innerText = guessCount;
+    if(obj1 == ""){
+        return obj2;
+    }
     
-//     const lowercaseCountries = countriesAndCapitals[currentLetter].map(country => country.toLowerCase());
-//     const lowercaseGuess = capitalizedGuess.toLowerCase();
-//     if (lowercaseCountries.includes(lowercaseGuess)) {
-//         if (!correctCountries.includes(capitalizedGuess)) {
-//             correctCountries.push(capitalizedGuess);
-//             document.getElementById("correctGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
-//             if (correctCountries.length === countriesAndCapitals[currentLetter].length) {
-//                 document.getElementById("congrats").style.display = "block";
-//             }
-//         }
-//     } else {
-//         if (!incorrectCountries.includes(capitalizedGuess)) {
-//             incorrectCountries.push(capitalizedGuess);
-//             document.getElementById("incorrectGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
-//         }
-//     }
-//     document.getElementById("guessInput").value = "";
-// }
+    const concatArrays = (arr1, arr2) => (arr1 || []).concat(arr2 || []);
 
+    // Iterate over keys in obj1 and add them to result
+    Object.keys(obj1).forEach(key => {
+      result[key] = concatArrays(obj1[key], obj2[key]);
+    });
+  
+    // Iterate over keys in obj2 that are not in obj1 and add them to result
+    Object.keys(obj2).forEach(key => {
+      if (!obj1.hasOwnProperty(key)) {
+        result[key] = obj2[key];
+      }
+    });
+  
+    return result;
+  }
+
+// Normal code
 
 // Event listeners
+const countriesToggle = document.getElementById('countriesToggle');
+const capitalsToggle = document.getElementById('capitalsToggle');
+
+let countriesTemp;
+let capitalsTemp;
+
+countriesTemp = JSON.parse(JSON.stringify(countriesList));
+capitalsTemp = "";
+
+countriesToggle.checked = true; // default is true
+
+// countries switch event listener
+countriesToggle.addEventListener('change', function() {
+    if (this.checked) {
+        console.log('Countries is ON');
+        countriesTemp = JSON.parse(JSON.stringify(countriesList));
+    } else {
+        console.log('Countries is OFF');
+        countriesTemp = "";
+    }
+});
+
+// capitals switch event listener
+capitalsToggle.addEventListener('change', function() {
+    if (this.checked) {
+        // console.log('Capitals is ON');
+        capitalsTemp = JSON.parse(JSON.stringify(capitalsList));
+    } else {
+        // console.log('Capitals is OFF');
+        capitalsTemp = "";
+    }
+});
+
 document.getElementById("startButton").addEventListener("click", startGame);
 document.getElementById("submitGuess").addEventListener("click", checkGuess);
 document.getElementById("guessInput").addEventListener("keypress", function(event) {
@@ -132,3 +196,4 @@ document.getElementById("guessInput").addEventListener("keypress", function(even
         checkGuess();
     }
 });
+

@@ -4,15 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Geography Game</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
-    <h1>Geography Game</h1>
+    <h1>The Geography Game</h1>
+
     <p class="game-description">
         Welcome to the Geography Game!  <br> <br>
-        Guess the countries that start with the letter. Click the button to begin!
+        Guess the countries or Capitals that start with the letter assigned. Select the criteria you want to guess and then click the button to begin!
     </p>
+
+    <br>
+    
+    <div class="toggle-container">
+        <div class="toggle-item">
+            <label class="switch">
+                <input type="checkbox" id="countriesToggle">
+                <span class="slider"></span>
+            </label>
+            <p>Countries</p>
+        </div>
+        <div class="toggle-item">
+            <label class="switch">
+                <input type="checkbox" id="capitalsToggle">
+                <span class="slider"></span>
+            </label>
+            <p>Capitals</p>
+        </div>
+    </div>
+
     <button id="startButton">Start Game</button>
     <div id="gameArea" style="display: none;">
         <h2 id="congrats" style="display: none;">Congratulations!</h2>
