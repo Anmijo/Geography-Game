@@ -9,11 +9,16 @@
 <body>
 <div class="container">
     <h1>Geography Game</h1>
+    <p class="game-description">
+        Welcome to the Geography Game!  <br> <br>
+        Guess the countries that start with the letter. Click the button to begin!
+    </p>
     <button id="startButton">Start Game</button>
     <div id="gameArea" style="display: none;">
+        <h2 id="congrats" style="display: none;">Congratulations!</h2>
         <h2 id="letter">Letter: </h2>
         <input type="text" id="guessInput" placeholder="Enter country">
-        <button id="submitGuess">Submit Guess</button>
+        <button id="submitGuess">Submit</button>
         <div class="guess-boxes-container">
             <div class="incorrect-guesses-box">
                 <h3>Incorrect Guesses:</h3>
@@ -25,7 +30,6 @@
             </div>
         </div>
         <h3>Guesses Made: <span id="guessCount">0</span></h3>
-        <h2 id="congrats" style="display: none;">Congratulations!</h2>
     </div>
 </div>
 <script src="script.js"></script>
