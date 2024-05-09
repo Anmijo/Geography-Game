@@ -58,8 +58,11 @@ const capitalsList = {
 let currentLetter;
 let correctCriteria;
 let incorrectCriteria;
-let guessCount;
-let usedList;
+let guessCount; //number of guesses
+let remaining; // remaining guesses
+let usedList;// combined list of countries and/or capital
+
+let lowercaseCriteria; //list of correct countries
 
 // Function to start the game
 function startGame() {
@@ -82,6 +85,10 @@ function startGame() {
     const letters = Object.keys(usedList);
     currentLetter = letters[Math.floor(Math.random() * letters.length)];
     document.getElementById("letter").innerText = "Letter: " + currentLetter;
+
+    lowercaseCriteria = usedList[currentLetter].map(criteria => criteria.toLowerCase());
+    remaining = lowercaseCriteria.length;
+    document.getElementById("remaining").innerText = remaining;
 }
 
 // Function to check the guess
@@ -102,12 +109,13 @@ function checkGuess() {
     guessCount++;
     document.getElementById("guessCount").innerText = guessCount;
     
-    const lowercaseCriteria = usedList[currentLetter].map(criteria => criteria.toLowerCase());
     const lowercaseGuess = capitalizedGuess.toLowerCase();
     if (lowercaseCriteria.includes(lowercaseGuess)) {
         if (!correctCriteria.includes(capitalizedGuess)) {
             correctCriteria.push(capitalizedGuess);
             document.getElementById("correctGuesses").innerHTML += "<li>" + capitalizedGuess + "</li>";
+            remaining--; // decrease number of remaining
+            document.getElementById("remaining").innerText = remaining;
             if (correctCriteria.length === usedList[currentLetter].length) {
                 document.getElementById("congrats").style.display = "block";
                 document.getElementById("submitGuess").style.display = "none";
@@ -151,6 +159,8 @@ function mergeObjects(obj1, obj2) {
   
     return result;
   }
+
+
 
 // Normal code
 
