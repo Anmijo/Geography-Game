@@ -79,9 +79,21 @@ function startGame() {
     document.querySelector(".game-description").style.display = "none";
     document.querySelector(".toggle-container").style.display = "none";
     document.getElementById("startButton").style.display = "none";
+
+    document.getElementById("congrats").style.display = "none";
+    document.getElementById("submitGuess").style.display = "block";
+    document.getElementById("guessInput").style.display = "block";
+    document.getElementById("nextButton").style.display = "none";   
+    document.getElementById("correctGuesses").innerHTML = "";
+    document.getElementById("incorrectGuesses").innerHTML = "";
+
+
     correctCriteria = [];
     incorrectCriteria = [];
+
     guessCount = 0;
+    document.getElementById("guessCount").innerText = guessCount;
+
     const letters = Object.keys(usedList);
     currentLetter = letters[Math.floor(Math.random() * letters.length)];
     document.getElementById("letter").innerText = "Letter: " + currentLetter;
@@ -118,6 +130,7 @@ function checkGuess() {
             document.getElementById("remaining").innerText = remaining;
             if (correctCriteria.length === usedList[currentLetter].length) {
                 document.getElementById("congrats").style.display = "block";
+                document.getElementById("nextButton").style.display = "block";
                 document.getElementById("submitGuess").style.display = "none";
                 document.getElementById("guessInput").style.display = "none";
             }
@@ -199,6 +212,7 @@ capitalsToggle.addEventListener('change', function() {
 });
 
 document.getElementById("startButton").addEventListener("click", startGame);
+document.getElementById("nextButton").addEventListener("click", startGame);
 document.getElementById("submitGuess").addEventListener("click", checkGuess);
 document.getElementById("guessInput").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {

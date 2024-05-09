@@ -42,6 +42,19 @@ button:hover {
     background-color: #0056b3;
 }
 
+#nextButton {
+    display: block;
+    margin: 20px auto; 
+    
+}
+
+#submitGuess {
+    display: block;
+    margin: 20px auto; 
+    
+}
+
+
 input[type="text"] {
     padding: 10px;
     font-size: 16px;
@@ -93,7 +106,7 @@ input[type="text"] {
 
 #guessCount {
     display: inline-block;
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
     color: #007bff;
     margin-left: 5px;
@@ -102,7 +115,7 @@ input[type="text"] {
 
 #remaining {
     display: inline-block;
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
     color: #007bff;
     margin-left: 5px;
@@ -111,14 +124,22 @@ input[type="text"] {
 
 .counters {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     text-align: center; 
 }
 
 .counters h3 {
-    display: inline-block;
-    margin: 0 30px; 
+    font-size: 14px; 
+    margin: 0; 
+}
+
+.left-aligned {
+    text-align: left; 
+}
+
+.right-aligned {
+    text-align: right; 
 }
 
 
