@@ -206,4 +206,3 @@ document.getElementById("guessInput").addEventListener("keypress", function(even
         checkGuess();
     }
 });
-
